@@ -1,6 +1,6 @@
 class LittleBigAdmin::Model < LittleBigAdmin::Base
 
-  def self.model_settings
+  def self.base_settings
 
     setting :menu do
       [ @name.to_s.humanize, { priority: 0 } ]
@@ -17,6 +17,10 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
     setting :instance_name do
       ->(model) { model.name }
     end
+
+  end
+
+  def self.scope_settings
 
     setting :base_scope do
      -> { @name.to_s.classify.constantize }
@@ -36,6 +40,10 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
 
     list_setting :filter
 
+  end
+
+  def self.page_settings
+
     list_setting :collection_action
 
     setting :index
@@ -44,5 +52,7 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
 
   end
 
-  model_settings
+  base_settings
+  scope_settings
+  page_settings
 end

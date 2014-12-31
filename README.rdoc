@@ -30,7 +30,7 @@ To Do
 
 * Form View
 
-* Page up and running
+* Simple Page up and running
 
 * Model List
 
@@ -38,7 +38,7 @@ To Do
 
 * Pagination
 
-* 
+* Scopes
 
 * Model show
 
@@ -50,8 +50,10 @@ To Do
 
 * Integrate C3.js
 
-* Get graphs up and running
+* Graphs
 
-Features
+* Search / Filter on Graph
+
+Additional Features
 
 * Rendering Partials

@@ -1,0 +1,57 @@
+= LittleBigAdmin
+
+Minimal-dependency drop-in admin framework for Rails Projects with moderate to large amounts of data. Activeadmin-like DSL. Work in Progress.
+
+
+== Flakes
+
+http://getflakes.com/preview/grid.html
+
+
+== Steps
+
+Done
+
+* Get a basic flakes page up and running
+
+* Get setup up and running
+
+* Start on the DSL implementation
+
+* Get a demo view builder page up and running
+
+To Do
+
+* View Builder Specs
+
+* Table View Specs
+
+* Form Builder
+
+* Form View
+
+* Page up and running
+
+* Model List
+
+* Filters 
+
+* Pagination
+
+* 
+
+* Model show
+
+* Model form
+
+* Formatters
+
+* Menu 
+
+* Integrate C3.js
+
+* Get graphs up and running
+
+Features
+
+* Rendering Partials

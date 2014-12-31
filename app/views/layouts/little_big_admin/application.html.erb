@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= LittleBigAdmin.config.title %></title>
+  <%= stylesheet_link_tag    "little_big_admin/application", media: "all" %>
+  <%= javascript_include_tag "little_big_admin/application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class='flakes-frame'>
+  <div class='flakes-navigation'>
+
+  </div>
+  <div class='flakes-content'>
+    <div class='view-wrap'>
+      <%= yield %>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

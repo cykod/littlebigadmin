@@ -1,17 +1,19 @@
 LittleBigAdmin::Engine.routes.draw do
+  namespace :little_big_admin, path: "", as: "lba" do
 
-  resources :models, as: :admin_model, only: [] do
+    resources :models, only: [] do
 
-    resources :items, path: "" do
-      collection do 
-        resources :lists, only: :show
+      resources :items, path: "" do
+        collection do 
+          resources :lists, only: :show
+        end
+
+        get "actions/:action" => "model_actions#show", as: "action"
+        patch "actions/:action" => "model_actions#patch"
       end
-
-      get "actions/:action" => "model_actions#show", as: "action"
-      patch "actions/:action" => "model_actions#patch"
     end
-  end
 
-  resources :graphs, only: :show, as: :admin_graph
-  resources :pages, only: :show, as: :admin_page
+    resources :graphs, only: :show
+    resources :pages, only: :show
+  end
 end

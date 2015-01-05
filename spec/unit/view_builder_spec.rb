@@ -15,7 +15,20 @@ describe LittleBigAdmin::ViewBuilder do
         block :div
         block :div
       end
-      expect(builder.render).to include "<div class=\"grid-2\">"
+      output = builder.render
+      expect(output).to include "<div class=\"grid-2\">"
+      expect(output).to include "<div class=\"span-1\">"
+    end
+
+    it "allows sizing to control grid and span" do
+      builder.grid do
+        block :div, size: 3
+        block :div
+      end
+      output = builder.render
+      expect(output).to include "<div class=\"grid-4\">"
+      expect(output).to include "<div class=\"span-3\">"
+      expect(output).to include "<div class=\"span-1\">"
     end
   end
 

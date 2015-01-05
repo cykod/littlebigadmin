@@ -5,7 +5,7 @@ require "little_big_admin/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "little_big_admin"
+  s.name        = "littlebigadmin"
   s.version     = LittleBigAdmin::VERSION
   s.authors     = ["Pascal Rettig"]
   s.email       = ["pascal@cykod.com"]
@@ -28,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'byebug'
 end

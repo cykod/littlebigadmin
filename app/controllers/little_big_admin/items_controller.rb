@@ -1,44 +1,46 @@
 class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
+
+  before_filter :get_model
   
 
   def index
+    scope = @model.base_scope_block.call
 
-    builder = LittleBigAdmin::ViewBuilder.new(User.last)
+    view_builder = LittleBigAdmin::ViewBuilder.new(view_context)
+    view_builder.table(scope.all, &@model.index_block)
 
+    @result = view_builder.render
+  end
 
-    @result = builder.render do
-      grid gutter: 20 do
-        panel "Basic Info", size: 3 do
-          grid do
-            field :first_name, size: 2
-            field :last_name
-          end
+  def show
+    item = @model.find_model_block.call(params[:id].to_s)
 
-          grid do
-            field :position
-            block :div do
-              "Testerama"
-            end
-          end
-        end
+    view_builder = LittleBigAdmin::ViewBuilder.new(view_context,item)
+    view_builder.grid(&@model.show_block)
 
-        panel "Details" do
-          grid do
-            field :first_name
-          end
-          grid do
-            field :first_name
-          end
-        end
-      end
+    @result = view_builder.render
+  end
 
-      table User.all do
-        column :first_name
-        column :last_name
-      end
-    end
+  def new
+    item = @model.new_model_block.call
+
+    view_builder = LittleBigAdmin::ViewBuilder.new(view_context,item)
+    view_builder.form(item_name, item, &@model.form_block)
+
+    @result = view_builder.render
+
+    render action: 'form'
+  end
+
+  protected
 
 
+  def get_model
+    @model = LittleBigAdmin::Registrar.get(:model,item_name)
+  end
+
+  def item_name
+    params[:model_id].to_s.singularize.to_sym
   end
 
 end

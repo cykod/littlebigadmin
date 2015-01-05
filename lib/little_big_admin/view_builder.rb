@@ -4,7 +4,8 @@ class LittleBigAdmin::ViewBuilder
   include ActionView::Helpers::OutputSafetyHelper
 
 
-  def initialize(object = nil)
+  def initialize(view_context,object = nil)
+    @view_context = view_context
     @stack = [[]]
     @objects = []
     @objects.push(object) if object
@@ -51,6 +52,14 @@ class LittleBigAdmin::ViewBuilder
              LittleBigAdmin::TableBuilder.new(objects, self).setup(&block).render)
   end
 
+  def form(item_name, item, &block)
+    form_builder = LittleBigAdmin::FormBuilder.new(item_name, item, self)
+
+    form_builder.form do |form_builder|
+      instance_exec form_builder, &block
+    end
+  end
+
   def object
     @objects.last
   end
@@ -68,12 +77,21 @@ class LittleBigAdmin::ViewBuilder
     @objects.pop(object) if object
   end
 
+  def method_missing(method_name, *args, &block)
+    @view_context.send(method_name, *args, &block)
+  end
+
+  def push_resolved(string, options = {})
+    @stack.last.push([ string, options ])
+  end
+
   protected
 
 
   def add_tag(name, options, content)
     content_tag(name, resolve_content(content), options)
   end
+
 
   def push_tag(name, options, content)
     @stack.last.push( [ name, options, resolve_content(content) ])
@@ -100,7 +118,9 @@ class LittleBigAdmin::ViewBuilder
 
     content = [ content ] unless content.is_a?(Array)
     safe_join(content.map do |tag|
-      tag.is_a?(String) ? tag : content_tag(tag[0], tag[2], tag[1])
+      tag.is_a?(String) ? tag : 
+        tag.length == 3 ? content_tag(tag[0], tag[2], tag[1]) :
+        tag[0]
     end)
   end
 

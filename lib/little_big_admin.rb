@@ -1,11 +1,12 @@
 require 'jquery-rails'
+require "little_big_admin/engine"
 
 require "little_big_admin/base"
 require "little_big_admin/view_builder"
 require "little_big_admin/table_builder"
+require "little_big_admin/form_builder"
 
 require "little_big_admin/config"
-require "little_big_admin/engine"
 
 require "little_big_admin/registrar"
 
@@ -42,10 +43,10 @@ module LittleBigAdmin
 
   def self.reset
     self.config = nil
-    self.objects = nil
   end
 
   def self.load_all_objects
+    self.objects = nil
     admin_files.each { |file| load(file) }
   end
 

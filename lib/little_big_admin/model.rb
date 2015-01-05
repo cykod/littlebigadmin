@@ -30,8 +30,8 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
       -> { self.base_scope_block.call.new }
     end
 
-    setting :find_model do |id|
-      -> { self.base_scope_block.find(id) }
+    setting :find_model do
+      ->(id) { self.base_scope_block.call.find(id) }
     end
 
     list_setting :scope do

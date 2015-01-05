@@ -33,38 +33,40 @@ LittleBigAdmin.model :user do
     linked_column :id, order: true
     linked_column :name
     linked_column :business #relationship are auto linked to other models and are preloaded automatically
-    column :salary, formatter: :currency
+    column :position
 
     column :created_at
-    default_actions
+    # default_actions
   end
 
   show do
     panel "Basic Info", size: 2 do
-      row do
+      grid do
         field :first_name, label: 'The First Name'
         field :last_name
       end
 
-      row do
+      grid do
         field :position, size: 2
         field :created_at
-        field :salary, formatter: :currency
       end
     end
 
     panel "Details" do
-      row do 
+      grid do 
         field :last_name
       end
     end
   end
 
-  form do
-    row do 
-      # each row is divided between its fields
-      text_field :name, size: 1
-      autocomplete_field :business, size: 2 # field with a change button, popup w/ autocomplete
+  form do |f|
+    panel "Stuffs" do
+      grid do 
+        # each row is divided between its fields
+        f.text_field :first_name, size: 1
+        f.text_field :last_name, size: 1
+        #autocomplete_field :business, size: 2 # field with a change button, popup w/ autocomplete
+      end
     end
   end
 

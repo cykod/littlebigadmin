@@ -1,6 +1,6 @@
 module LittleBigAdmin
   class Engine < ::Rails::Engine
-    isolate_namespace LittleBigAdmin
+    # isolate_namespace LittleBigAdmin
 
     config.generators do |g|
       g.test_framework      :rspec,        :fixture => false

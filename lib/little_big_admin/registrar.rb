@@ -8,6 +8,10 @@ class LittleBigAdmin::Registrar
     LittleBigAdmin.objects[type.to_sym][name.to_sym] = instance
   end
 
+  def self.get(type, name)
+    LittleBigAdmin.objects[type.to_sym][name.to_sym]
+  end
+
   def self.helper_class(type)
     "LittleBigAdmin::#{type.to_s.classify}".constantize
   end

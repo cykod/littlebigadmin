@@ -1,0 +1,13 @@
+<% LittleBigAdmin::Registrar.menu.each do |menu_section| %>
+<ul>
+  <% if menu_section[0] %>
+    <li class='title'><%= menu_section[0] %></li>
+  <% end -%>
+
+  <% menu_section[1].each do |item| %>
+    <li><%= link_to item.menu, admin_item_href(item) %></li>
+  <% end -%>
+
+
+</ul>
+<% end -%>

@@ -20,11 +20,7 @@ Done
 
 * Get a demo view builder page up and running
 
-To Do
-
 * View Builder Specs
-
-* Table View Specs
 
 * Form Builder
 
@@ -34,26 +30,45 @@ To Do
 
 * Model List
 
+* Model show
+
+* Model form
+
+* Menu 
+
+* Rendering Partials
+
+* Formatters
+
+* Checkboxes
+
+* Default Actions
+
+* Integrate C3.js
+
+* Graphs
+
+* Flash Notice on Save / etc
+
+* Turbo Links the whole thing
+
+To Do
+
+* Page Titles
+
+* Table View Specs
+
+* Table Ordering
+
 * Filters 
 
 * Pagination
 
 * Scopes
 
-* Model show
+* Table Actions
 
-* Model form
+* Search / Filter
 
-* Formatters
+* Search on Graph
 
-* Menu 
-
-* Integrate C3.js
-
-* Graphs
-
-* Search / Filter on Graph
-
-Additional Features
-
-* Rendering Partials

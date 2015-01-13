@@ -2,7 +2,11 @@ class LittleBigAdmin::Graph < LittleBigAdmin::Base
 
   def self.graph_settings
 
+    setting :name
+
     setting :cache_for
+
+    setting :height, 320
 
     setting :type, :line
 
@@ -16,4 +20,6 @@ class LittleBigAdmin::Graph < LittleBigAdmin::Base
   end
 
   graph_settings
+
+
 end

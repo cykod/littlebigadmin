@@ -2,12 +2,13 @@ require "spec_helper"
 
 describe LittleBigAdmin::ViewBuilder do
 
-  let(:builder) { LittleBigAdmin::ViewBuilder.new }
+  let(:view_context) { LittleBigAdmin::ApplicationController.new.view_context }
+  let(:builder) { LittleBigAdmin::ViewBuilder.new(view_context) }
 
   describe "#grid" do
     it "outputs a stright div tag by default" do
       builder.grid
-      expect(builder.render).to eq "<div></div>"
+      expect(builder.build).to eq "<div></div>"
     end
 
     it "outputs a grid with nested elements" do
@@ -15,7 +16,7 @@ describe LittleBigAdmin::ViewBuilder do
         block :div
         block :div
       end
-      output = builder.render
+      output = builder.build
       expect(output).to include "<div class=\"grid-2\">"
       expect(output).to include "<div class=\"span-1\">"
     end
@@ -25,7 +26,7 @@ describe LittleBigAdmin::ViewBuilder do
         block :div, size: 3
         block :div
       end
-      output = builder.render
+      output = builder.build
       expect(output).to include "<div class=\"grid-4\">"
       expect(output).to include "<div class=\"span-3\">"
       expect(output).to include "<div class=\"span-1\">"

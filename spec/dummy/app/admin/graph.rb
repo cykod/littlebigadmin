@@ -1,22 +1,20 @@
 LittleBigAdmin.graph :recent_businesses do
   
-  cache_for 10.minutes
+  #cache_for 10.minutes
 
   type :line
+
+  name "Recent Business Joins"
 
   x_axis 'Date', position: 'outer-center'
   y_axis "Businesses Created"
 
-  filter :search, input: :text
+  # filter :search, input: :text
 
-  columns do |search|
-    businesses = Business.where("created_at > ?",6.months.ago.at_start_of_month)
-              .group("date_trunc( 'month', created_at)")
+  columns do
+    businesses = Business.where("created_at > ?",6.months.ago.at_beginning_of_month)
+              .group("date_trunc( 'day', created_at)")
 
-    if search.present?
-      businesses = businesses.where("name like ?","%#{search}%")
-    end
-    
     data = businesses.count.to_a
             
     {

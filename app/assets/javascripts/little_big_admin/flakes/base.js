@@ -88,6 +88,7 @@ var FlakesFrame = {
 }
 
 // Initialize modules when DOM is ready
-jQuery(function() {
+$(document).on("ready page:load",function() {
 	FlakesFrame.init();
 });
+

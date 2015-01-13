@@ -1,0 +1,15 @@
+<h1>Add <%= @model.instance_title %></h1>
+
+<p class='flakes-breadcrumbs'>
+<%= link_to @model.plural_name.to_s, admin_model_items_path(@model.name) %>
+/
+
+</p>
+
+<br/>
+<%= form_tag admin_model_items_path(@model.name), class: 'grid-form' do -%>
+  <%= @result %>
+  <br/>
+  <input type='submit' class='button-green bigger' value='Submit' />
+<% end -%>
+

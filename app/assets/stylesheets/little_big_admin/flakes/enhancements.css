@@ -1,0 +1,17 @@
+
+.flakes-navigation .logo, .flakes-mobile-top-bar .logo-wrap {
+  font-size:25px;
+  text-decoration:none;
+  color:black;
+  display:block;
+}
+
+.flakes-mobile-top-bar .logo-wrap {
+  padding-top:15px;
+
+}
+
+.flakes-panel {
+  margin-bottom:20px;
+
+}

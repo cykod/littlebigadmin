@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.0"
   s.add_dependency "jquery-rails"
+  s.add_dependency "turbolinks"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "paperclip"
@@ -29,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'byebug'
+  s.add_development_dependency 'web-console'
 end

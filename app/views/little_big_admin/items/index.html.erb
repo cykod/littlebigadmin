@@ -1,1 +1,11 @@
+<h1><%= @model.title %></h1>
+
+<% if @model.search %>
+<div class='flakes-search'>
+  <input class='search-box search' placeholder='Search' autofocus/>
+</div>
+<% end -%>
+<div class='flakes-actions-bar'>
+<%= link_to "Add #{@model.name_value}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
+</div>
 <%= @result %>

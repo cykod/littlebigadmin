@@ -3,12 +3,15 @@
 LittleBigAdmin.page :dashboard do
 
   show do
-    panel do
-      graph :recent_businesses
-    end
+    grid do 
+      panel "Something A", size: 3 do
+        graph :funnel_breakdown
+        graph :recent_businesses
+      end
 
-    panel do
-      graph :funnel_breakdown
+      panel "Something B" do
+        render partial: "/admin/dashboard/testerama"
+      end
     end
   end
 end

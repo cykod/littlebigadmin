@@ -10,10 +10,25 @@
 
 <div class='flakes-frame'>
   <div class='flakes-navigation'>
-
+    <%= link_to LittleBigAdmin.config.title, little_big_admin.admin_root_path, class: 'logo' %>
+    <%= render partial: '/little_big_admin/shared/menu' %>
   </div>
   <div class='flakes-content'>
+    <div class="flakes-mobile-top-bar">
+      <%= link_to LittleBigAdmin.config.title, little_big_admin.admin_root_path, class: 'logo-wrap' %>
+
+      <a href="" class="navigation-expand-target">
+        <%= image_tag 'little_big_admin/navigation-expand-target.png', height: '26px' %>
+      </a>
+    </div>
+    
     <div class='view-wrap'>
+      <% if flash[:notice] %>
+        <div class='flakes-message information'><%= flash[:notice] %></div>
+      <% end -%>
+      <% if flash[:error] %>
+        <div class='flakes-message error'><%= flash[:error] %></div>
+      <% end -%>
       <%= yield %>
     </div>
   </div>

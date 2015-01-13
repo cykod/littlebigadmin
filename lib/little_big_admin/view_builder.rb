@@ -12,7 +12,7 @@ class LittleBigAdmin::ViewBuilder
   end
 
   def panel(name, options = {},&block)
-    push_tag(:div, options,
+    push_tag(:div, add_class("flakes-panel",options),
             [ 
               add_tag(:fieldset, { class: "flakes-information-box" }, 
                       [ add_tag(:legend, {}, name) ] + nested_content(&block))
@@ -24,10 +24,15 @@ class LittleBigAdmin::ViewBuilder
       options = object
       object = nil
     end
+    options[:gutter] ||= 20
     with_object(object) do
       size, content =  nested_grid_content(&block)
       push_tag(:div, grid_options(size,options), content)
     end
+  end
+
+  def stacked(&block)
+    push_resolved(content_tag("div", resolve_content(nested_content(&block))))
   end
 
   def block(tag_name, options = {}, &block)
@@ -46,13 +51,19 @@ class LittleBigAdmin::ViewBuilder
              ])
   end
 
+  def graph(name, options ={})
+    graph_builder = LittleBigAdmin::GraphBuilder.new(name,self,options)
+
+    push_resolved(graph_builder.build)
+  end
+
   def table(objects,options = {},&block)
     push_tag(:table, 
              { class: "flakes-table" }, 
-             LittleBigAdmin::TableBuilder.new(objects, self).setup(&block).render)
+             LittleBigAdmin::TableBuilder.new(objects, self).setup(&block).build)
   end
 
-  def form(item_name, item, &block)
+  def form_fields(item_name, item, options = {}, &block)
     form_builder = LittleBigAdmin::FormBuilder.new(item_name, item, self)
 
     form_builder.form do |form_builder|
@@ -64,7 +75,7 @@ class LittleBigAdmin::ViewBuilder
     @objects.last
   end
 
-  def render(&block)
+  def build(&block)
     instance_eval(&block) if block
 
     # take the top of the stack
@@ -75,6 +86,10 @@ class LittleBigAdmin::ViewBuilder
     @objects.push(object) if object
     yield
     @objects.pop(object) if object
+  end
+
+  def render(*args)
+    push_resolved(@view_context.send(:render, *args))
   end
 
   def method_missing(method_name, *args, &block)

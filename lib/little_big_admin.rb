@@ -1,10 +1,17 @@
 require 'jquery-rails'
+require 'turbolinks'
 require "little_big_admin/engine"
 
 require "little_big_admin/base"
 require "little_big_admin/view_builder"
 require "little_big_admin/table_builder"
 require "little_big_admin/form_builder"
+require "little_big_admin/graph_builder"
+
+require "little_big_admin/formatter"
+require "little_big_admin/formatters/default"
+require "little_big_admin/formatters/date"
+require "little_big_admin/formatters/model"
 
 require "little_big_admin/config"
 
@@ -18,9 +25,15 @@ module LittleBigAdmin
 
   mattr_accessor :config
   mattr_accessor :objects
+  mattr_accessor :menu
 
   def self.model(name, options = {}, &block)
     LittleBigAdmin::Registrar.register(:model, name, options, &block)
+  end
+
+  def self.model_for(object)
+    cls = object.class.to_s.underscore
+    model = LittleBigAdmin::Registrar.get(:model, cls)
   end
 
   def self.graph(name, options = {}, &block)
@@ -37,6 +50,9 @@ module LittleBigAdmin
     self.config.run(&block)
 
     ActiveSupport::Dependencies.autoload_paths -= self.config.load_paths
+
+    Time::DATE_FORMATS[:little_big_admin_date] = LittleBigAdmin.config.date_format
+    Time::DATE_FORMATS[:little_big_admin_time] = LittleBigAdmin.config.time_format  
 
     load_all_objects
   end

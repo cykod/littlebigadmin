@@ -1,0 +1,18 @@
+<h1>Edit <%= @model.instance_name_block.call(@item) %></h1>
+
+<p class='flakes-breadcrumbs'>
+<%= link_to @model.plural_name.to_s, admin_model_items_path(@model.name) %>
+/
+<%= link_to  @model.instance_name_block.call(@item), admin_model_item_path(@model.name,@item.id) %>
+/
+</p>
+
+<br/>
+
+<%= form_tag admin_model_item_path(@model.name,@item.id), method: 'put', class: 'grid-form' do -%>
+  <%= @result %>
+  <br/>
+  <%= link_to "Cancel", admin_model_item_path(@model.name,@item.id), class: "button-lightgray bigger" %>
+  <input type='submit' class='button-green bigger' value='Submit' />
+<% end -%>
+

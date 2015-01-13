@@ -3,6 +3,8 @@ require "spec_helper"
 describe LittleBigAdmin do
 
   describe ".setup" do
+    
+    before { LittleBigAdmin.reset }
 
     it "leaves creates as config instance" do
       expect(LittleBigAdmin.config).to eq nil

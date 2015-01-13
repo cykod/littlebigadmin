@@ -4,5 +4,23 @@ class LittleBigAdmin::Page < LittleBigAdmin::Base
     setting :show
   end
 
+  def self.menu_settings
+
+    setting :name do
+      @name
+    end
+
+    setting :menu do
+      [ @name.to_s.titleize, { priority: 0 } ]
+    end
+
+    setting :title do
+      @name.to_s.titleize
+    end
+
+  end
+
+
+  menu_settings
   page_settings
 end

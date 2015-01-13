@@ -3,6 +3,8 @@ class LittleBigAdmin::Base
   class_attribute :setting_configs
   class_attribute :list_setting_configs
 
+  attr_accessor :locked
+
   def initialize(name, options = {}, &block)
     @name = name.to_sym
     @options = options
@@ -15,7 +17,10 @@ class LittleBigAdmin::Base
     instance_eval &block if block
 
     instantiate_default_list_settings
+
+    self.locked = true if block
   end
+
 
   def process_args(args,&block)
     options = args.last.is_a?(Hash) ? args.pop : {}
@@ -41,6 +46,9 @@ class LittleBigAdmin::Base
                                       end
 
     define_method attribute do |*args, &block|
+      if locked
+        return @settings[attribute] && @settings[attribute][:args][0]
+      end
       options, block = process_args(args, &block)
       existing = @settings[attribute] || { options: {} }
       @settings[attribute]  = { args: args, 
@@ -49,8 +57,8 @@ class LittleBigAdmin::Base
     end
 
     define_accessor_methods(attribute)
-
   end
+
 
   def self.define_accessor_methods(attribute)
     define_method "#{attribute}_value" do 

@@ -25,47 +25,59 @@ LittleBigAdmin.model :user do
   scope :all
   scope :active
 
-  filter :name
+  search :name, ->(q) { where("first_name LIKE ? OR last_name LIKE ?", q, q) }
   # filter :name, ->(q) { where(name: q) }, input: :text_field
   # filter :name, :like, input: :text_field
 
   index do
+    selectable_column
     linked_column :id, order: true
     linked_column :name
-    linked_column :business #relationship are auto linked to other models and are preloaded automatically
+    column :business #relationship are auto linked to other models and are preloaded automatically
     column :position
 
     column :created_at
-    # default_actions
+    default_actions
   end
 
   show do
-    panel "Basic Info", size: 2 do
-      grid do
-        field :first_name, label: 'The First Name'
-        field :last_name
+    grid do 
+      panel "Basic Info", size: 2 do
+        grid do
+          field :first_name, label: 'The First Name'
+          field :last_name
+        end
+
+        grid do
+          field :position, size: 2
+          field :created_at
+        end
       end
 
-      grid do
-        field :position, size: 2
-        field :created_at
-      end
-    end
-
-    panel "Details" do
-      grid do 
-        field :last_name
+      panel "Details" do
+        grid do 
+          field :last_name
+        end
       end
     end
   end
 
   form do |f|
-    panel "Stuffs" do
-      grid do 
+    panel "Details" do
+      f.row do
         # each row is divided between its fields
-        f.text_field :first_name, size: 1
-        f.text_field :last_name, size: 1
+        f.text_field :first_name, size: 1, label: "Ths First Name"
+        f.text_field :last_name, size: 1, placeholder: "WTF?"
         #autocomplete_field :business, size: 2 # field with a change button, popup w/ autocomplete
+      end
+
+    end
+
+    panel "Info" do
+
+      f.row do
+        f.text_field :position, size: 4
+        f.text_field :business_id, size: 1
       end
     end
   end

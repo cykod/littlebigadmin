@@ -10,8 +10,14 @@ class LittleBigAdmin::Config
 
   def self.defaults 
     {
-      title: "Admin Panel"
+      title: "Admin Panel",
+      current_user: -> { current_user },
+      authorize: ->(model, action_name) { current_user.present? },
+      login_path: -> { new_user_session_path },
+      date_format: "%-m/%-d/%Y",
+      time_format: "%-m/%-d/%Y %l:%M%P"
     }
+    
   end
 
   def self.setup_attributes

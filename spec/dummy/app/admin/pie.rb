@@ -1,5 +1,7 @@
 LittleBigAdmin.graph :funnel_breakdown do
 
+  name "Funnel Stage Breakdown"
+
   cache_for 30.minutes
 
   type :pie

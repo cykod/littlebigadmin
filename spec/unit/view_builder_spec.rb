@@ -7,7 +7,7 @@ describe LittleBigAdmin::ViewBuilder do
 
   describe "#grid" do
     it "outputs a stright div tag by default" do
-      builder.grid
+      builder.stacked
       expect(builder.build).to eq "<div></div>"
     end
 
@@ -17,7 +17,7 @@ describe LittleBigAdmin::ViewBuilder do
         block :div
       end
       output = builder.build
-      expect(output).to include "<div class=\"grid-2\">"
+      expect(output).to include "<div class=\"grid-2 gutter-20\">"
       expect(output).to include "<div class=\"span-1\">"
     end
 
@@ -27,7 +27,7 @@ describe LittleBigAdmin::ViewBuilder do
         block :div
       end
       output = builder.build
-      expect(output).to include "<div class=\"grid-4\">"
+      expect(output).to include "<div class=\"grid-4 gutter-20\">"
       expect(output).to include "<div class=\"span-3\">"
       expect(output).to include "<div class=\"span-1\">"
     end

@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require little_big_admin/flakes/snap
 //= require little_big_admin/flakes/responsive-elements
 //= require little_big_admin/flakes/gridforms

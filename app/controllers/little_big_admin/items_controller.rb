@@ -80,7 +80,8 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
   def get_model
     @model = LittleBigAdmin::Registrar.get(:model,item_name)
-
+    return render_little_big_admin_404 unless @model
+    @current_model_name = @model.name
   end
 
   def item_name

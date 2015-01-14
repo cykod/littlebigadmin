@@ -8,5 +8,16 @@ module LittleBigAdmin
         admin_model_items_path(item.name)
       end
     end
+
+
+    def admin_item_class(item)
+      active = if item.is_a?(LittleBigAdmin::Page)
+        item.name == @current_page_name
+      else
+        item.name == @current_model_name
+      end
+
+      active ? "active" : ""
+    end
   end
 end

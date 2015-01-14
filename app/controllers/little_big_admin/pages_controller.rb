@@ -19,11 +19,12 @@ class LittleBigAdmin::PagesController < LittleBigAdmin::ApplicationController
 
   def get_page
     @page = LittleBigAdmin::Registrar.get(:page,page_name)
-    render_little_big_admin_404 unless @page
+    return render_little_big_admin_404 unless @page
+    @current_page_name = @page.name
   end
 
   def page_name
-    params[:id].to_s.singularize.to_sym
+    params[:id].to_s.to_sym
   end
 
 end

@@ -5,7 +5,7 @@
   <% end -%>
 
   <% menu_section[1].each do |item| %>
-    <li><%= link_to item.menu, admin_item_href(item) %></li>
+    <li class='<%= admin_item_class(item) %>'><%= link_to item.menu, admin_item_href(item) %></li>
   <% end -%>
 
 

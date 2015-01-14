@@ -7,8 +7,8 @@ class LittleBigAdmin::TableBuilder
     @columns = []
   end
 
-  def column(name, options ={})
-    @columns.push([ :column, name, options ])
+  def column(name, options ={}, &block)
+    @columns.push([ :column, name, options, block ])
   end
 
   def linked_column(name, options = {})
@@ -63,7 +63,11 @@ class LittleBigAdmin::TableBuilder
             ], " ")
             
           when :column
-            LittleBigAdmin::Formatter.format(obj, col[1], col[2])
+            if col[3]
+              @view.instance_exec obj, &col[3]
+            else
+              LittleBigAdmin::Formatter.format(obj, col[1], col[2])
+            end
           when :linked_column
             model = LittleBigAdmin.model_for(obj)
             val = LittleBigAdmin::Formatter.format(obj, col[1], col[2])

@@ -51,33 +51,41 @@ class LittleBigAdmin::TableBuilder
   end
 
   def table_render_cell(obj, col)
-    val = case col[0]
-          when :checkbox
-            "<input type='checkbox' />".html_safe
-          when :actions
-            model = LittleBigAdmin.model_for(obj)
-            @view.safe_join([
-              @view.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller'),
-              @view.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller'),
-              @view.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete")
-            ], " ")
-            
-          when :column
-            if col[3]
-              @view.instance_exec obj, &col[3]
-            else
-              LittleBigAdmin::Formatter.format(obj, col[1], col[2])
-            end
-          when :linked_column
-            model = LittleBigAdmin.model_for(obj)
-            val = LittleBigAdmin::Formatter.format(obj, col[1], col[2])
-            if model
-              @view.link_to val, admin_model_item_path(model.name, obj.id)
-            else
-              val
-            end
-          end
+    val = self.send("table_render_#{col[0]}", obj, col)
     @view.content_tag(:td, val)
+  end
+
+  protected
+
+  def table_render_checkbox(obj, col)
+    "<input type='checkbox' />".html_safe
+  end
+
+  def table_render_actions(obj,col)
+    model = LittleBigAdmin.model_for(obj)
+    @view.safe_join([
+      @view.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller'),
+      @view.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller'),
+      @view.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete")
+    ], " ")
+  end
+
+  def table_render_column(obj,col)
+    if col[3]
+      @view.instance_exec obj, &col[3]
+    else
+      LittleBigAdmin::Formatter.format(obj, col[1], col[2])
+    end
+  end
+
+  def table_render_linked_column(obj,col)
+    model = LittleBigAdmin.model_for(obj)
+    val = table_render_column(obj, col)
+    if model
+      @view.link_to val, admin_model_item_path(model.name, obj.id)
+    else
+      val
+    end
   end
 
 end

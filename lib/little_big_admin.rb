@@ -21,6 +21,9 @@ require "little_big_admin/model"
 require "little_big_admin/page"
 require "little_big_admin/graph"
 
+require "little_big_admin/restful_model"
+require "little_big_admin/model_viewer"
+
 module LittleBigAdmin
 
   mattr_accessor :config

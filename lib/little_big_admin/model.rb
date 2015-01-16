@@ -25,11 +25,11 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
     end
 
     setting :title do
-      @name.to_s.pluralize.titleize
+      @name.to_s.humanize.pluralize.titleize
     end
 
     setting :instance_title do
-      @name.to_s.titleize
+      @name.to_s.humanize.titleize
     end
 
   end

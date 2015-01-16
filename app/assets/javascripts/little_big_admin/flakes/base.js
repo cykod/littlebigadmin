@@ -90,5 +90,6 @@ var FlakesFrame = {
 // Initialize modules when DOM is ready
 $(document).on("ready page:load",function() {
 	FlakesFrame.init();
+  ResponsiveElements.init();
 });
 

@@ -19,7 +19,7 @@ class LittleBigAdmin::GraphBuilder
 
 
   def graph_javascript
-    "<script> $(document).on(\"ready page:load\", function() { c3.generate(#{graph_data.to_json}); })</script>".html_safe
+    "<script> c3.generate(#{graph_data.to_json}); </script>".html_safe
   end
 
 
@@ -30,6 +30,11 @@ class LittleBigAdmin::GraphBuilder
 
     details = {
       bindto: "##{@name}_chart",
+      padding: {
+        left: 60,
+        right: 60
+
+      },
       data: {
         columns: columns,
         type: @graph.type
@@ -65,7 +70,7 @@ class LittleBigAdmin::GraphBuilder
       x: {
         type: "timeseries",
         tick: { 
-          format: "%m/%d/%Y"
+          format: "%m/%d"
         }
       }
     }

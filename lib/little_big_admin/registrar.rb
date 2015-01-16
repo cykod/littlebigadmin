@@ -22,6 +22,8 @@ class LittleBigAdmin::Registrar
     all_objects = (LittleBigAdmin.objects[:page] || {}).values +
                   (LittleBigAdmin.objects[:model] || {}).values
 
+
+    all_objects.reject! { |obj| obj.menu == false }
     
     sections = all_objects.group_by do |obj|
       obj.menu_options[:section] || nil

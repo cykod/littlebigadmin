@@ -150,4 +150,3 @@ var ResponsiveElements = {
 	}
 };
 
-ResponsiveElements.init();

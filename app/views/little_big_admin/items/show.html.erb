@@ -1,12 +1,12 @@
 <h1><%= @model.instance_name_block.call(@item) %> (<%= @item.id %>)</h1>
 
 <p class='flakes-breadcrumbs'>
-<%= link_to @model.plural_name.to_s, admin_model_items_path(@model.name) %>
+<%= link_to @model.title, admin_model_items_path(@model.name) %>
 /
 </p>
 
 <br/>
 <%= @result %>
 <br/>
-<%= link_to "Edit #{@model.name_value}", edit_admin_model_item_path(@model.name, @item.id), class: 'button-green bigger' %>
+<%= link_to "Edit #{@model.instance_title}", edit_admin_model_item_path(@model.name, @item.id), class: 'button-green bigger' %>
 

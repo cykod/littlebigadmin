@@ -15,7 +15,7 @@ class LittleBigAdmin::ViewBuilder
     push_tag(:div, add_class("flakes-panel",options),
             [ 
               add_tag(:fieldset, { class: "flakes-information-box" }, 
-                      [ add_tag(:legend, {}, name) ] + nested_content(&block))
+                       (name.present?  ? [ add_tag(:legend, {}, name) ] : []) + nested_content(&block))
             ])
   end
 
@@ -63,11 +63,23 @@ class LittleBigAdmin::ViewBuilder
              LittleBigAdmin::TableBuilder.new(objects, self).setup(&block).build)
   end
 
+  def metrics(name = nil, options = {}, &block)
+    grid(class: "lba-metrics", gutter: 0) do
+      LittleBigAdmin::MetricsBuilder.new(self,options).setup(&block)
+    end
+  end
+
   def form_fields(item_name, item, options = {}, &block)
     form_builder = LittleBigAdmin::FormBuilder.new(item_name, item, self)
 
     form_builder.form do |form_builder|
       instance_exec form_builder, &block
+    end
+  end
+
+  %w(h1 h2 h3 h4 h5 p).each do |tg|
+    define_method tg do |value,options={}|
+      push_tag(tg, options, value)
     end
   end
 
@@ -100,8 +112,28 @@ class LittleBigAdmin::ViewBuilder
     @stack.last.push([ string, options ])
   end
 
-  protected
+  def nested_content(&block)
+    return nil unless block
+    push_stack
+    
+    result = self.instance_eval(&block)
+    if result.is_a?(String)
+      @stack.last.push(result)
+    end
 
+    pop_stack 
+  end
+
+  def resolve_content(content)
+    return "".html_safe unless content.present?
+
+    content = [ content ] unless content.is_a?(Array)
+    safe_join(content.map do |tag|
+      tag.is_a?(String) ? tag : 
+        tag.length == 3 ? content_tag(tag[0], tag[2], tag[1]) :
+        tag[0]
+    end)
+  end
 
   def add_tag(name, options, content)
     content_tag(name, resolve_content(content), options)
@@ -111,6 +143,10 @@ class LittleBigAdmin::ViewBuilder
   def push_tag(name, options, content)
     @stack.last.push( [ name, options, resolve_content(content) ])
   end
+
+
+  protected
+
 
   def add_class(name, base = nil)
     base ||= {}
@@ -128,28 +164,6 @@ class LittleBigAdmin::ViewBuilder
     add_class("grid-#{size}#{gutter}", base)
   end
 
-  def resolve_content(content)
-    return "".html_safe unless content.present?
-
-    content = [ content ] unless content.is_a?(Array)
-    safe_join(content.map do |tag|
-      tag.is_a?(String) ? tag : 
-        tag.length == 3 ? content_tag(tag[0], tag[2], tag[1]) :
-        tag[0]
-    end)
-  end
-
-  def nested_content(&block)
-    return nil unless block
-    push_stack
-    
-    result = self.instance_eval(&block)
-    if result.is_a?(String)
-      @stack.last.push(result)
-    end
-
-    pop_stack 
-  end
 
   def nested_grid_content(&block)
     return [ nil, [] ] unless block

@@ -7,11 +7,15 @@ require "little_big_admin/view_builder"
 require "little_big_admin/table_builder"
 require "little_big_admin/form_builder"
 require "little_big_admin/graph_builder"
+require "little_big_admin/metrics_builder"
 
 require "little_big_admin/formatter"
 require "little_big_admin/formatters/default"
 require "little_big_admin/formatters/date"
 require "little_big_admin/formatters/model"
+require "little_big_admin/formatters/numeric"
+require "little_big_admin/formatters/currency"
+require "little_big_admin/formatters/percent"
 
 require "little_big_admin/config"
 

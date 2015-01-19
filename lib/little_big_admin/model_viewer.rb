@@ -17,9 +17,9 @@ class LittleBigAdmin::ModelViewer
     end
   end
 
-  def table(items)
+  def table(item_list)
     run_builder do |builder|
-      builder.table(items, &@model.index_block)
+      builder.table(item_list, &@model.index_block)
     end
   end
 

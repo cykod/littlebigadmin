@@ -6,7 +6,7 @@ class LittleBigAdmin::RestfulModel
 
 
   def list(query_params)
-    @model.base_scope_block.call.all
+    ItemList.new(@model,query_params).generate
   end
 
   def new

@@ -1,6 +1,9 @@
 LittleBigAdmin.model :business do
 
+
   menu "Business", section: "Models"
+
+  per_page 4
 
   show do
     panel "Details" do

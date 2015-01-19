@@ -58,6 +58,10 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
       nil
     end
 
+    setting :per_page, 40
+
+    setting :show_total, true
+
   end
 
   def self.page_settings

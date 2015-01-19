@@ -21,6 +21,7 @@ LittleBigAdmin.model :user do
   #new_model do
   #  User.new
   #end
+  #
 
   scope :all
   scope :active

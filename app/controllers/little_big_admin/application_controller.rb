@@ -15,7 +15,8 @@ module LittleBigAdmin
     def little_big_admin_authorize
       authorized = instance_exec(params[:model_id],params[:action],&LittleBigAdmin.config.authorize)
       unless authorized
-        redirect_to instance_eval(LittleBigAdmin.config.login_path)
+        target = instance_exec(&LittleBigAdmin.config.login_path)
+        redirect_to target
       end
     end
 

@@ -52,6 +52,9 @@ Done
 
 * Turbo Links the whole thing
 
+* Pagination
+
+
 To Do
 
 * Page Titles
@@ -61,8 +64,6 @@ To Do
 * Table Ordering
 
 * Filters 
-
-* Pagination
 
 * Scopes
 

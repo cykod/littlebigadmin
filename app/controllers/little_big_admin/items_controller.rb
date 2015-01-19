@@ -4,8 +4,8 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
   
 
   def index
-    @items = @restful_model.list({})
-    @result = model_viewer.table(@items)
+    @item_list = @restful_model.list(params)
+    @result = model_viewer.table(@item_list.items)
   end
 
   def show

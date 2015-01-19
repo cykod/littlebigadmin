@@ -3,6 +3,10 @@ class LittleBigAdmin::TableBuilder
 
   def initialize(objects,view)
     @view = view
+    if @objects.is_a?(ItemList)
+      @item_list = @objects
+      @objects = @item_list.items
+    end
     @objects = objects
     @columns = []
   end

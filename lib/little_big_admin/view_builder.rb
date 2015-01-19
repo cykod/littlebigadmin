@@ -42,9 +42,9 @@ class LittleBigAdmin::ViewBuilder
   def field(name, options = {})
     label = options.delete(:label) || name.to_s.humanize
 
-    value = object.send(name).to_s
+    value = LittleBigAdmin::Formatter.format(object,name, options )
 
-    push_tag(:dl,options, 
+    push_tag(:dl,{}, 
              [ 
                add_tag(:dt, {}, label),
                add_tag(:dd, {}, value)

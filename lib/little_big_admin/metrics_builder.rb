@@ -13,8 +13,9 @@ class LittleBigAdmin::MetricsBuilder
   end
 
   def build_stat(stat)
+    href = stat[:href]
     @view_builder.push_tag(:div,  {},
-      @view_builder.add_tag(:div, { class: 'lba-metric', title: stat[:description] },
+      @view_builder.add_tag(href ? :a : :div, { class: 'lba-metric', title: stat[:description], href: href },
                            [
                              stat[:name],
                              build_value(stat),
@@ -25,7 +26,7 @@ class LittleBigAdmin::MetricsBuilder
   def build_value(stat)
     value =  LittleBigAdmin::Formatter.run(stat[:value], stat[:format] || :default, stat[:format_options] || {})
     if stat[:percent]
-      number = number_to_percentage(stat[:percent], precision:2, strip_insignificant_zeros: true)
+      number = number_to_percentage(stat[:percent]*100, precision:2, strip_insignificant_zeros: true)
       percent = " ".html_safe + if stat[:percent] > 0
                         @view_builder.content_tag(:span, "(+#{number})", class: 'percent up')
                       else

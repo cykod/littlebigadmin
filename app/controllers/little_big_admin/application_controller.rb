@@ -1,5 +1,6 @@
 module LittleBigAdmin
   class ApplicationController < ::ApplicationController
+    include Rails.application.routes.url_helpers
 
     before_filter :_reload_objects
     before_filter :little_big_admin_authorize
@@ -9,12 +10,12 @@ module LittleBigAdmin
     end
 
     def little_big_admin_user 
-      instance_eval(&LittleBigAdmin.config.current_user)
+      instance_exec(&LittleBigAdmin.config.current_user)
     end
 
     def little_big_admin_authorize
-      authorized = instance_exec(params[:model_id],params[:action],&LittleBigAdmin.config.authorize)
-      unless authorized
+      authorized = instance_exec(params[:model_id],params[:action],&LittleBigAdmin.config.authorize) if little_big_admin_user
+      if !little_big_admin_user || !authorized
         target = instance_exec(&LittleBigAdmin.config.login_path)
         redirect_to target
       end

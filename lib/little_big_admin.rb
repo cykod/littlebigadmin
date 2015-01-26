@@ -62,6 +62,8 @@ module LittleBigAdmin
     Time::DATE_FORMATS[:little_big_admin_date] = LittleBigAdmin.config.date_format
     Time::DATE_FORMATS[:little_big_admin_time] = LittleBigAdmin.config.time_format  
 
+    LittleBigAdmin::ViewBuilder.send(:include, Rails.application.routes.url_helpers)
+
     Rails.application.config.assets.precompile += %w( little_big_admin_application.js little_big_admin_application.css )
     load_all_objects
   end

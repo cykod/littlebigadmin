@@ -66,12 +66,15 @@ class LittleBigAdmin::FormBuilder
     ])
   end
 
+  def check_box(field,options = {})
+    field(:check_box, field, options)
+  end
+
   def field(field_type, field, options)
     field_wrapper(field, options) do
       @form.send(field_type,field,options)
     end
   end
-
 
 
   def method_missing(method_name, *args, &block)

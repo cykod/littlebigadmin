@@ -4,7 +4,7 @@ module LittleBigAdmin
       extend ActionView::Helpers::NumberHelper
 
       def self.format(value,options={})
-        if value.ceil != value
+        if value.present? && value.ceil != value
           number_with_precision(value, { precision: 2, delimiter: "," }.merge(options))
         else
           number_with_delimiter(value, options)

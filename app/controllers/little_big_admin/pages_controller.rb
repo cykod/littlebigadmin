@@ -7,8 +7,10 @@ class LittleBigAdmin::PagesController < LittleBigAdmin::ApplicationController
   end
 
   def show
+    set_title(@page.title)
     view_builder = LittleBigAdmin::ViewBuilder.new(view_context)
     view_builder.stacked(&@page.show_block)
+
 
     @result = view_builder.build
   end

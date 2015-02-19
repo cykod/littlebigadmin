@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= LittleBigAdmin.config.title %></title>
+  <title><%= @lba_page_title || LittleBigAdmin.config.title %></title>
   <%= stylesheet_link_tag    "little_big_admin_application", media: "all" %>
   <%= javascript_include_tag "little_big_admin_application" %>
   <%= csrf_meta_tags %>

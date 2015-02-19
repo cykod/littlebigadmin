@@ -4,6 +4,7 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
   
 
   def index
+    set_title(@model.title)
     @item_list = @restful_model.list(params)
     @result = model_viewer.table(@item_list.items)
   end
@@ -12,10 +13,13 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
     @item = @restful_model.get(item_id)
     return render_little_big_admin_404 unless @item
 
+    set_title("#{@model.instance_name_block.call(@item)} > #{@model.instance_title}")
+
     @result = model_viewer.show(@item)
   end
 
   def new
+    set_title("New #{@model.instance_title}")
     @item ||= @restful_model.new
     @result = model_viewer.form(@item)
     render action: "new"
@@ -33,7 +37,10 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
   def edit
     @item ||= @restful_model.get(item_id)
+
     @result = model_viewer.form(@item)
+
+    set_title("Edit #{@model.instance_name_block.call(@item)} > #{@model.instance_title}")
     render action: "edit"
   end
 

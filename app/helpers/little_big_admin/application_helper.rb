@@ -20,4 +20,5 @@ module LittleBigAdmin
       active ? "active" : ""
     end
   end
+
 end

@@ -1,5 +1,6 @@
 module LittleBigAdmin
   class ApplicationController < ::ApplicationController
+    helper "little_big_admin/application"
     include Rails.application.routes.url_helpers
 
     before_filter :_reload_objects
@@ -24,5 +25,11 @@ module LittleBigAdmin
     def render_little_big_admin_404
       render "/little_big_admin/shared/404"
     end
+
+    def set_title(title=nil)
+      @lba_page_title = title
+    end
+
+    helper_method :set_title
   end
 end

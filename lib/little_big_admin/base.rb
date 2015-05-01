@@ -96,7 +96,15 @@ class LittleBigAdmin::Base
   def permitted?(permission)
     permission = permission.to_sym
     perms = LittleBigAdmin.config.permissions
-    perms.index(permission).present? && perms.index(permission) <= perms.index(self.permit_value)
+
+    item_permissions = perms.index(self.permit_value)
+
+    if item_permissions.is_a?(Array)
+      perms.include?(permission)
+    else
+      perms.index(permission).present? && perms.index(permission) <= item_permissions
+    end
+
   end
 
   private

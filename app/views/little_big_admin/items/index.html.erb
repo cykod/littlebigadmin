@@ -6,7 +6,7 @@
 </div>
 <% end -%>
 <div class='flakes-actions-bar'>
-<%= link_to "Add #{@model.name_value}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
+<%= link_to "Add #{@model.instance_title}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
 </div>
 <%= @result %>
 <div class="flakes-pagination right">

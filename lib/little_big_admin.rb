@@ -33,7 +33,6 @@ module LittleBigAdmin
 
   mattr_accessor :config
   mattr_accessor :objects
-  mattr_accessor :menu
 
   def self.model(name, options = {}, &block)
     LittleBigAdmin::Registrar.register(:model, name, options, &block)

@@ -93,6 +93,12 @@ class LittleBigAdmin::Base
 
   end
 
+  def permitted?(permission)
+    permission = permission.to_sym
+    perms = LittleBigAdmin.config.permissions
+    perms.index(permission).present? && perms.index(permission) <= perms.index(self.permit_value)
+  end
+
   private
 
   def instantiate_default_settings
@@ -113,5 +119,8 @@ class LittleBigAdmin::Base
       end
     end
   end
+
+
+
 
 end

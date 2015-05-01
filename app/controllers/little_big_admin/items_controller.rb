@@ -2,7 +2,9 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
   before_filter :get_model
 
-  self.type_name = "model"
+  self.type_name = :model
+
+
 
   def index
     set_title(@model.title)
@@ -72,8 +74,7 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
   end
 
   def get_model
-    @model = LittleBigAdmin::Registrar.get(:model,item_name)
-    return render_little_big_admin_404 unless @model
+    @model = @lba_object
     @current_model_name = @model.name
     @restful_model = LittleBigAdmin::RestfulModel.new(@model)
   end

@@ -2,6 +2,7 @@ class LittleBigAdmin::Page < LittleBigAdmin::Base
 
   def self.page_settings
     setting :show
+
   end
 
   def self.menu_settings
@@ -17,6 +18,8 @@ class LittleBigAdmin::Page < LittleBigAdmin::Base
     setting :title do
       @name.to_s.titleize
     end
+
+    setting :permit, :root
 
   end
 

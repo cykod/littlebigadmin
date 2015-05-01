@@ -7,6 +7,7 @@ module LittleBigAdmin
     include Rails.application.routes.url_helpers
 
     before_filter :_reload_objects
+    before_filter :little_big_admin_user
     before_filter :little_big_admin_authorize
 
     before_filter :little_big_admin_menu
@@ -20,8 +21,13 @@ module LittleBigAdmin
     end
 
     def little_big_admin_authorize
-      authorized = instance_exec(self.type_name, params[:admin_model_id] || params[:id],params[:action],&LittleBigAdmin.config.authorize) if little_big_admin_user
-      if !little_big_admin_user || !authorized
+      @lba_object = LittleBigAdmin::Registrar.get(self.type_name, params[:admin_model_id] || params[:id])
+
+      return render_little_big_admin_404 unless @lba_object
+
+      authorized = @lba_object.permitted?(instance_exec(&LittleBigAdmin.config.current_permission))
+
+      if !authorized
         target = instance_exec(&LittleBigAdmin.config.login_path)
         redirect_to target
       end
@@ -37,10 +43,7 @@ module LittleBigAdmin
 
     def little_big_admin_menu
       @lba_menu = LittleBigAdmin::Registrar.menu do |obj|
-        type_name = obj.is_a?(LittleBigAdmin::Model) ? "model" : "page"
-        action_name = type_name == "model" ? "index" : "show"
-        authorized =  instance_exec(type_name, obj.name.to_s, action_name ,&LittleBigAdmin.config.authorize)
-        little_big_admin_user  && authorized
+        obj.permitted?(instance_exec(&LittleBigAdmin.config.current_permission))
       end
     end
 

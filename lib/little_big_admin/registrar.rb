@@ -3,7 +3,6 @@ class LittleBigAdmin::Registrar
   def self.register(type, name, options = {}, &block)
     helper_klass = helper_class(type)
     instance = helper_klass.new(name, options, &block)
-    LittleBigAdmin.menu = nil
     LittleBigAdmin.objects ||= {}
     LittleBigAdmin.objects[type.to_sym] ||= {}
     LittleBigAdmin.objects[type.to_sym][name.to_sym] = instance
@@ -18,7 +17,6 @@ class LittleBigAdmin::Registrar
   end
 
   def self.menu
-    return LittleBigAdmin.menu if LittleBigAdmin.menu
     all_objects = (LittleBigAdmin.objects[:page] || {}).values +
                   (LittleBigAdmin.objects[:model] || {}).values
 

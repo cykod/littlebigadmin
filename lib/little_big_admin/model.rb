@@ -72,6 +72,8 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
     setting :show
     setting :form
 
+    setting :permit, :root
+
   end
 
   menu_settings

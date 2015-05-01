@@ -2,8 +2,16 @@ class LittleBigAdmin::PagesController < LittleBigAdmin::ApplicationController
 
   before_filter :get_page, only: :show
 
+  self.type_name = "page"
+
   def index
-    redirect_to little_big_admin.admin_page_path("dashboard")
+    dashboard = admin_item_href(@lba_menu.first[1]) rescue nil
+
+    if dashboard
+      redirect_to dashboard
+    else
+      render nothing: true, status: 404
+    end
   end
 
   def show

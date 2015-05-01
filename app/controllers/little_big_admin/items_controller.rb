@@ -1,7 +1,8 @@
 class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
   before_filter :get_model
-  
+
+  self.type_name = "model"
 
   def index
     set_title(@model.title)

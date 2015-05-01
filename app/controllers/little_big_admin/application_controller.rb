@@ -40,7 +40,7 @@ module LittleBigAdmin
         type_name = obj.is_a?(LittleBigAdmin::Model) ? "model" : "page"
         action_name = type_name == "model" ? "index" : "show"
         authorized =  instance_exec(type_name, obj.name.to_s, action_name ,&LittleBigAdmin.config.authorize)
-        !little_big_admin_user || !authorized
+        little_big_admin_user  && authorized
       end
     end
 

@@ -17,14 +17,14 @@ class LittleBigAdmin::Registrar
     "LittleBigAdmin::#{type.to_s.classify}".constantize
   end
 
-  def self.menu(&block)
+  def self.menu
     return LittleBigAdmin.menu if LittleBigAdmin.menu
     all_objects = (LittleBigAdmin.objects[:page] || {}).values +
                   (LittleBigAdmin.objects[:model] || {}).values
 
 
     all_objects.reject! { |obj| obj.menu == false }
-               .select  { |obj| yield obj }
+               .select!  { |obj| yield obj }
     
     sections = all_objects.group_by do |obj|
       obj.menu_options[:section] || nil

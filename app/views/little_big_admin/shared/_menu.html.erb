@@ -10,4 +10,15 @@
 
 
 </ul>
+
 <% end -%>
+
+<% if @lba_logout_path = instance_exec(&LittleBigAdmin.config.logout_path) %>
+  <ul>
+    <li class='title'>User Account</li>
+    <li>
+      <%= link_to "Logout", @lba_logout_path, data: { method: :delete } %>
+    <li>
+  </ul>
+<% end -%>
+

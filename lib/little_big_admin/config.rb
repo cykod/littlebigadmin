@@ -13,7 +13,8 @@ class LittleBigAdmin::Config
       title: "Admin Panel",
       current_user: -> { current_user },
       authorize: ->(type, model, action_name) { current_user.present? },
-      login_path: -> { new_user_session_path },
+      login_path: -> { },
+      logout_path: -> { },
       date_format: "%-m/%-d/%Y",
       time_format: "%-m/%-d/%Y %l:%M%P"
     }

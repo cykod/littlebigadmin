@@ -7,7 +7,7 @@ module LittleBigAdmin
     include Rails.application.routes.url_helpers
 
     before_filter :_reload_objects
-    before_filter :little_big_admin_user
+    before_filter :little_big_admin_user_authorize
     before_filter :little_big_admin_authorize
 
     before_filter :little_big_admin_menu
@@ -18,6 +18,10 @@ module LittleBigAdmin
 
     def little_big_admin_user 
       instance_exec(&LittleBigAdmin.config.current_user)
+    end
+
+    def little_big_admin_user_authorize
+      return render_little_big_admin_404 unless little_big_admin_user
     end
 
     def little_big_admin_authorize

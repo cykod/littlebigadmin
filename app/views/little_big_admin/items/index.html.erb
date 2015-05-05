@@ -5,9 +5,11 @@
   <input class='search-box search' placeholder='Search' autofocus/>
 </div>
 <% end -%>
+<% if @model.edit_permitted?(instance_exec(&LittleBigAdmin.config.current_permission)) %>
 <div class='flakes-actions-bar'>
 <%= link_to "Add #{@model.instance_title}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
 </div>
+<% end -%>
 <%= @result %>
 <div class="flakes-pagination right">
   <% if @item_list.pagination[:last_page] %>

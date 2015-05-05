@@ -1,10 +1,9 @@
 class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
   before_filter :get_model
+  before_filter :check_edit, except: [ :index, :show ]
 
   self.type_name = :model
-
-
 
   def index
     set_title(@model.title)
@@ -78,6 +77,13 @@ class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
     @current_model_name = @model.name
     @restful_model = LittleBigAdmin::RestfulModel.new(@model)
   end
+
+  def check_edit
+    unless @model.edit_permitted?(instance_exec(&LittleBigAdmin.config.current_permission))
+      return render_little_big_admin_404
+    end
+  end
+
 
   def item_name
     params[:admin_model_id].to_s.singularize.to_sym

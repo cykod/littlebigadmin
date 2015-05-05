@@ -1,4 +1,4 @@
-<% @lba_menu.each do |menu_section| %>
+<% (@lba_menu||[]).each do |menu_section| %>
 <ul>
   <% if menu_section[0] %>
     <li class='title'><%= menu_section[0] %></li>

@@ -1,8 +1,8 @@
 class LittleBigAdmin::TableBuilder
   include LittleBigAdmin::Engine.routes.url_helpers
 
-  def initialize(objects,view)
-    @view = view
+  def initialize(objects,view_context)
+    @view_context = view_context
     if @objects.is_a?(ItemList)
       @item_list = @objects
       @objects = @item_list.items
@@ -37,18 +37,18 @@ class LittleBigAdmin::TableBuilder
   end
 
   def thead
-    @view.content_tag(:thead,
-                      @view.content_tag(:tr,
-                                        @view.safe_join(@columns.map do |col|
-                                          @view.content_tag(:td, col[1].to_s.humanize)
+    @view_context.content_tag(:thead,
+                      @view_context.content_tag(:tr,
+                                        @view_context.safe_join(@columns.map do |col|
+                                          @view_context.content_tag(:td, col[1].to_s.humanize)
                                         end)))
   end
 
   def tbody
-    @view.content_tag(:tbody,
-                      @view.safe_join(@objects.map do |obj|
-                        @view.content_tag(:tr,
-                          @view.safe_join(@columns.map do |col|
+    @view_context.content_tag(:tbody,
+                      @view_context.safe_join(@objects.map do |obj|
+                        @view_context.content_tag(:tr,
+                          @view_context.safe_join(@columns.map do |col|
                             table_render_cell(obj,col)
                           end))
                       end))
@@ -56,7 +56,12 @@ class LittleBigAdmin::TableBuilder
 
   def table_render_cell(obj, col)
     val = self.send("table_render_#{col[0]}", obj, col)
-    @view.content_tag(:td, val)
+    @view_context.content_tag(:td, val)
+  end
+
+
+  def method_missing(method_name, *args, &block)
+    @view_context.send(method_name, *args, &block)
   end
 
   protected
@@ -67,16 +72,25 @@ class LittleBigAdmin::TableBuilder
 
   def table_render_actions(obj,col)
     model = LittleBigAdmin.model_for(obj)
-    @view.safe_join([
-      @view.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller'),
-      @view.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller'),
-      @view.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete")
-    ], " ")
+
+    can_edit = model.edit_permitted?(@view_context.instance_exec(&LittleBigAdmin.config.current_permission))
+
+    actions = [
+      @view_context.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller')
+    ]
+
+    if can_edit
+      actions += [ @view_context.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller'),
+                   @view_context.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete")
+      ]
+    end
+
+    @view_context.safe_join(actions, " ")
   end
 
   def table_render_column(obj,col)
     if col[3]
-      @view.instance_exec obj, &col[3]
+      @view_context.instance_exec obj, &col[3]
     else
       LittleBigAdmin::Formatter.format(obj, col[1], col[2])
     end
@@ -86,7 +100,7 @@ class LittleBigAdmin::TableBuilder
     model = LittleBigAdmin.model_for(obj)
     val = table_render_column(obj, col)
     if model
-      @view.link_to val, admin_model_item_path(model.name, obj.id)
+      @view_context.link_to val, admin_model_item_path(model.name, obj.id)
     else
       val
     end

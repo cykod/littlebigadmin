@@ -21,7 +21,10 @@ module LittleBigAdmin
     end
 
     def little_big_admin_user_authorize
-      return render_little_big_admin_404 unless little_big_admin_user
+      if !little_big_admin_user
+        target = instance_exec(&LittleBigAdmin.config.login_path)
+        redirect_to target
+      end
     end
 
     def little_big_admin_authorize
@@ -31,14 +34,17 @@ module LittleBigAdmin
 
       authorized = @lba_object.permitted?(instance_exec(&LittleBigAdmin.config.current_permission))
 
-      if !authorized
-        target = instance_exec(&LittleBigAdmin.config.login_path)
-        redirect_to target
-      end
+      return render_little_big_admin_401 unless authorized
+
+      true
     end
 
     def render_little_big_admin_404
       render "/little_big_admin/shared/404"
+    end
+
+    def render_little_big_admin_401
+      render "/little_big_admin/shared/401"
     end
 
     def set_title(title=nil)

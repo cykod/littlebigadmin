@@ -8,5 +8,7 @@
 <br/>
 <%= @result %>
 <br/>
+<% if @model.edit_permitted?(instance_exec(&LittleBigAdmin.config.current_permission)) %>
 <%= link_to "Edit #{@model.instance_title}", edit_admin_model_item_path(@model.name, @item.id), class: 'button-green bigger' %>
+<% end -%>
 

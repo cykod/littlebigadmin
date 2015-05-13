@@ -54,10 +54,10 @@ Done
 
 * Pagination
 
+* Page Titles
 
 To Do
 
-* Page Titles
 
 * Table View Specs
 

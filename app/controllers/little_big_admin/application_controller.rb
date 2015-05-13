@@ -52,8 +52,9 @@ module LittleBigAdmin
     end
 
     def little_big_admin_menu
+      permission = instance_exec(&LittleBigAdmin.config.current_permission)
       @lba_menu = LittleBigAdmin::Registrar.menu do |obj|
-        obj.permitted?(instance_exec(&LittleBigAdmin.config.current_permission))
+        obj.permitted?(permission)
       end
     end
 

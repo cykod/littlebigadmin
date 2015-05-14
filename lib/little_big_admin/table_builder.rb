@@ -11,6 +11,7 @@ class LittleBigAdmin::TableBuilder
     @columns = []
   end
 
+
   def column(name, options ={}, &block)
     @columns.push([ :column, name, options, block ])
   end
@@ -55,8 +56,11 @@ class LittleBigAdmin::TableBuilder
   end
 
   def table_render_cell(obj, col)
-    val = self.send("table_render_#{col[0]}", obj, col)
-    @view_context.content_tag(:td, val)
+    table_builder = self
+    val = @view_context.nested_content do 
+      table_builder.send("table_render_#{col[0]}", obj, col)
+    end
+    @view_context.content_tag(:td, @view_context.resolve_content(val))
   end
 
 

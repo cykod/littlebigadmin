@@ -23,8 +23,8 @@ LittleBigAdmin.model :user do
   #end
   #
 
-  scope :all
-  scope :active
+  view :all
+  view :active
 
   search :name, ->(q) { where("first_name LIKE ? OR last_name LIKE ?", q, q) }
   # filter :name, ->(q) { where(name: q) }, input: :text_field

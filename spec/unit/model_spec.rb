@@ -37,8 +37,8 @@ describe LittleBigAdmin::Model do
         expect(model.new_model_block.call).to be_instance_of(LittleBigAdminTestModel)
       end
 
-      it "sets the scope all" do
-        expect(model.scope_settings).to eq [ [ :all ] ]
+      it "sets the view all" do
+        expect(model.view_settings).to eq [ [ :all ] ]
       end
 
       it "sets the page blocks to nil by default" do

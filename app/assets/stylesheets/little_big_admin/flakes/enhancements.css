@@ -71,6 +71,18 @@ a.lba-metric:hover {
   font-style:normal;
 }
 
+
+.flakes-pagination.right {
+  text-align:right;
+}
+
+
+.flakes-actions-bar .button-darkblue.selected { 
+    color:#3b5ca0;
+    background:white;
+    text-shadow:none;
+}
+
 @media only screen and (max-width:700px) {
   .lba-metric > span {
     padding:0 10px;

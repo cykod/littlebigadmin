@@ -1,29 +1,28 @@
 <h1><%= @model.title %></h1>
 
-<% if @model.search %>
+<% if @model.search_block || @model.search_value %>
+<form action='?' method='get' data-turbolinks-form="true">
 <div class='flakes-search'>
-  <input class='search-box search' placeholder='Search' autofocus/>
+  <input name='q' class='search-box search' placeholder='Search' value='<%= j @item_list.q %>' autofocus/>
 </div>
+</form>
 <% end -%>
-<% if @model.edit_permitted?(instance_exec(&LittleBigAdmin.config.current_permission)) %>
 <div class='flakes-actions-bar'>
-<%= link_to "Add #{@model.instance_title}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
-</div>
-<% end -%>
-<%= @result %>
-<div class="flakes-pagination right">
-  <% if @item_list.pagination[:last_page] %>
-    <a href='<%= admin_model_items_path(@model.name,@item_list.query(page: @item_list.pagination[:last_page])) %>'>Prev</a>
-    &nbsp; 
-  <% end -%>
-  Page
-  <input value="<%= @item_list.pagination[:page] %>">
-  <% if @item_list.pagination[:pages] %>
-    <i>of</i> <%= @item_list.pagination[:pages] %>
-    &nbsp;
+  <% if @model.view_settings.length > 1 %>
+    <% @model.view_settings.each do |view_setting| -%>
+      <%= link_to view_setting[0].to_s.humanize, admin_index_href(view: view_setting[0], page: 1), class: 'button-darkblue action lightgray smaller' + ((view_setting[0].to_s == @item_list.view.to_s) ? ' selected' : '') %>
+    <% end -%>
   <% end -%>
 
-  <% if @item_list.pagination[:next_page] %>
-    <a href='<%= admin_model_items_path(@model.name,@item_list.query(page: @item_list.pagination[:next_page])) %>'>Next</a>
+  <% if @model.edit_permitted?(instance_exec(&LittleBigAdmin.config.current_permission)) %>
+    <%= link_to "Add #{@model.instance_title}", new_admin_model_item_path(@model.name_value), class: 'action button-gray smaller right' %>
   <% end -%>
+</div>
+
+<div class="flakes-pagination right">
+  <%= render partial: 'pagination' %>
+</div>
+<%= @result %>
+<div class="flakes-pagination right">
+  <%= render partial: 'pagination' %>
 </div>

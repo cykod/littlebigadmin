@@ -19,6 +19,21 @@ module LittleBigAdmin
 
       active ? "active" : ""
     end
+
+
+    def admin_index_href(override = {})
+      admin_model_items_path(@model.name,@item_list.query(override))
+    end
+
+
+    def admin_hidden_form_fields(except)
+      output = []
+      @item_list.options_except(except).each do |key, val|
+        output << hidden_field_tag(key, val)
+      end
+      safe_join(output)
+    end
+
   end
 
 

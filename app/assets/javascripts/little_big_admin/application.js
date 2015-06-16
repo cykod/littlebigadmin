@@ -12,9 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
 //= require little_big_admin/flakes/snap
 //= require little_big_admin/flakes/responsive-elements
 //= require little_big_admin/flakes/gridforms
 //= require little_big_admin/flakes/base
 //= require little_big_admin/c3/d3
 //= require little_big_admin/c3/c3
+//= require_tree ./includes

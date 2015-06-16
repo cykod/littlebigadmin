@@ -48,7 +48,7 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
       ->(id) { self.base_scope_block.call.find(id) }
     end
 
-    list_setting :scope do
+    list_setting :view do
       [ :all ]
     end
 

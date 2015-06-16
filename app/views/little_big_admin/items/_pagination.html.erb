@@ -1,0 +1,17 @@
+<form action='?' method='get' data-turbolinks-form="true" >
+<% if @item_list.pagination[:last_page] %>
+  <a href='<%= admin_index_href(page: @item_list.pagination[:last_page]) %>'>Prev</a>
+  &nbsp; 
+<% end -%>
+Page
+<%= admin_hidden_form_fields("page") %>
+<input name="page" value="<%= @item_list.pagination[:page] %>" />
+<% if @item_list.pagination[:pages] %>
+  <i>of</i> <%= @item_list.pagination[:pages] %>
+  &nbsp;
+<% end -%>
+
+<% if @item_list.pagination[:next_page] %>
+  <a href='<%= admin_index_href(page: @item_list.pagination[:next_page]) %>'>Next</a>
+<% end -%>
+</form>

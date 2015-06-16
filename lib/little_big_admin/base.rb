@@ -83,6 +83,9 @@ class LittleBigAdmin::Base
     self.list_setting_configs[attribute] = block || true
 
     define_method attribute do |*args|
+      if locked
+        return self.send "#{attribute}_settings"
+      end
       @list_settings[attribute] ||= []
       @list_settings[attribute].push(args)
     end

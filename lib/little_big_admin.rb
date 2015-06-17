@@ -16,6 +16,7 @@ require "little_big_admin/formatters/model"
 require "little_big_admin/formatters/numeric"
 require "little_big_admin/formatters/currency"
 require "little_big_admin/formatters/percent"
+require "little_big_admin/formatters/plain"
 
 require "little_big_admin/config"
 

@@ -15,6 +15,11 @@
   margin-bottom:20px;
 }
 
+.flakes-panel dd p {
+  max-width:100%;
+
+}
+
 
 .lba-metrics {
   border:1px solid #c0c0c0;

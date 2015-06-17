@@ -42,12 +42,18 @@ class LittleBigAdmin::ViewBuilder
   def field(name, options = {})
     label = options.delete(:label) || name.to_s.humanize
 
-    value = LittleBigAdmin::Formatter.format(object,name, options )
+    display = if block_given?
+              value = yield object
+              as = options.delete(:as) || LittleBigAdmin::Formatter.choose_format(value)
+              LittleBigAdmin::Formatter.run(value, as, options)
+            else
+              LittleBigAdmin::Formatter.format(object,name, options )
+            end
 
     push_tag(:dl,{}, 
              [ 
                add_tag(:dt, {}, label),
-               add_tag(:dd, {}, value)
+               add_tag(:dd, {}, display)
              ])
   end
 

@@ -39,7 +39,6 @@ class ItemList
     options.slice(*(ALL_OPTIONS - except.map(&:to_s)))
   end
 
-
   def run_search(scope)
     search_scope = nil
 
@@ -55,11 +54,26 @@ class ItemList
   end
 
   def run_filters(scope)
+    @model.filter_settings.each do |filter|
+      key = filter[0].to_s
+
+      if current_filters.has_key?(key)
+        if filter[1].is_a?(Proc)
+          scope = scope.merge(filter[1].call(current_filters[key]))
+        else
+          scope = scope.where(key => current_filters[key].to_s)
+        end
+      end
+    end
     scope
   end
 
   def run_views(scope)
     scope.send(view)
+  end
+
+  def current_filters
+    @options["filter"]
   end
 
   def view

@@ -23,6 +23,7 @@ LittleBigAdmin.model :user do
   #end
   #
 
+
   view :all
   view :active
 

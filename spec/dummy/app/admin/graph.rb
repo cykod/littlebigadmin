@@ -9,8 +9,6 @@ LittleBigAdmin.graph :recent_businesses do
   x_axis 'Date', position: 'outer-center'
   y_axis "Businesses Created"
 
-  # filter :search, input: :text
-
   columns do
     businesses = Business.where("created_at > ?",6.months.ago.at_beginning_of_month)
               .group("date_trunc( 'day', created_at)")

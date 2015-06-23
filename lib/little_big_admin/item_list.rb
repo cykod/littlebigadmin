@@ -73,7 +73,7 @@ class ItemList
   end
 
   def current_filters
-    @options["filter"]
+    @options["filter"] || {}
   end
 
   def view

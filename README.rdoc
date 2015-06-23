@@ -56,20 +56,26 @@ Done
 
 * Page Titles
 
+* Scopes
+
+* Filters 
+
+* Search / Filter
+
 To Do
 
+* Filter Visuals - none, select, numeric, 
+
+* Model Select Popup (only if it has search - otherwise "search" by id and pagination)
 
 * Table View Specs
 
 * Table Ordering
 
-* Filters 
-
-* Scopes
-
 * Table Actions
 
-* Search / Filter
+
+
 
 Optional
 

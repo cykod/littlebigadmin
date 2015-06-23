@@ -9,7 +9,7 @@ class ItemList
 
 
   def generate
-    base_scope = @model.base_scope_block.call
+    base_scope = @model.base_scope_block.call.all
     
     search_scope = run_search(base_scope)
 

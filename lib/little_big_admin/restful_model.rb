@@ -19,14 +19,14 @@ class LittleBigAdmin::RestfulModel
 
   def create(item_params)
     item = new_item
-    item.update_attributes(item_params)
+    item = @model.create_model_block.call(item, item_params)
     item
   end
 
   def update(item_id, item_params)
     item = get(item_id)
     return nil unless item
-    item.update_attributes(item_params)
+    item = @model.update_model_block.call(item, item_params)
     item
   end
 

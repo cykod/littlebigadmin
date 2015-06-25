@@ -44,6 +44,14 @@ class LittleBigAdmin::Model < LittleBigAdmin::Base
       -> { self.base_scope_block.call.new }
     end
 
+    setting :create_model do
+      -> (item,item_params) { item.update_attributes(item_params); item }
+    end
+
+    setting :update_model do
+      -> (item,item_params) { item.update_attributes(item_params); item }
+    end
+
     setting :find_model do
       ->(id) { self.base_scope_block.call.find(id) }
     end

@@ -24,8 +24,12 @@ class LittleBigAdmin::TableBuilder
     @columns.push([ :checkbox ])
   end
 
-  def default_actions
-    @columns.push([ :actions ])
+  def default_actions(options = {})
+    @columns.push([ :actions, "Actions", options ])
+  end
+
+  def actions(options = {})
+    default_actions(options)
   end
 
   def setup(&block)
@@ -76,18 +80,21 @@ class LittleBigAdmin::TableBuilder
 
   def table_render_actions(obj,col)
     model = LittleBigAdmin.model_for(obj)
+    options = col[2] || {}
+
+    only = options[:only] || [ :view, :edit, :delete ]
 
     can_edit = model.edit_permitted?(@view_context.instance_exec(&LittleBigAdmin.config.current_permission))
 
-    actions = [
-      @view_context.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller')
-    ]
+    only -= [ :edit, :delete ]if !can_edit
+      
+    actions = []
 
-    if can_edit
-      actions += [ @view_context.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller'),
-                   @view_context.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete")
-      ]
-    end
+    actions << @view_context.link_to("View", admin_model_item_path(model.name, obj.id), class: 'button-lightgray smaller') if only.include?(:view)
+
+    actions <<  @view_context.link_to("Edit", edit_admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller') if only.include?(:edit)
+
+    actions << @view_context.link_to("X", admin_model_item_path(model.name, obj.id), class:'button-lightgray smaller', method: "delete", data: { confirm: "Really Delete?" }) if only.include?(:delete)
 
     @view_context.safe_join(actions, " ")
   end

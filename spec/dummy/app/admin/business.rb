@@ -20,7 +20,7 @@ LittleBigAdmin.model :business do
     default_actions
   end
 
-  form do |f|
+  form multipart: true do |f|
     panel "Details" do
       f.row do
         f.text_field :name

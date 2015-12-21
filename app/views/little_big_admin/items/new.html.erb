@@ -7,7 +7,7 @@
 </p>
 
 <br/>
-<%= form_tag admin_model_items_path(@model.name), class: 'grid-form' do -%>
+<%= form_tag admin_model_items_path(@model.name), { class: 'grid-form' }.merge(@model.form_options) do -%>
   <%= @result %>
   <br/>
   <input type='submit' class='button-green bigger' value='Submit' />

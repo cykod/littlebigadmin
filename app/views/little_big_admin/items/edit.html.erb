@@ -9,7 +9,7 @@
 
 <br/>
 
-<%= form_tag admin_model_item_path(@model.name,@item.id), method: 'put', class: 'grid-form' do -%>
+<%= form_tag admin_model_item_path(@model.name,@item.id), { method: 'put', class: 'grid-form' }.merge(@model.form_options) do -%>
   <%= @result %>
   <br/>
   <%= link_to "Cancel", admin_model_item_path(@model.name,@item.id), class: "button-lightgray bigger" %>

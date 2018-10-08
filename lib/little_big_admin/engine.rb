@@ -8,5 +8,9 @@ module LittleBigAdmin
       g.assets false
       g.helper false
     end
+
+    initializer 'littlebigadmin.assets.precompile' do |app|
+      app.config.assets.precompile <<  %w( little_big_admin/navigation-expand-target.png )
+    end
   end
 end

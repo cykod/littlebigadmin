@@ -2,11 +2,12 @@ class LittleBigAdmin::PagesController < LittleBigAdmin::ApplicationController
 
   include LittleBigAdmin::ApplicationHelper
 
-  before_filter :get_page, only: :show
-
   self.type_name = :page
 
-  skip_before_filter :little_big_admin_authorize, only: :index
+  before_action :get_page, only: :show
+
+
+  skip_before_action :little_big_admin_authorize, only: :index
 
   def index
 

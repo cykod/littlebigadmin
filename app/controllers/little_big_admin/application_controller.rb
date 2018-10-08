@@ -6,11 +6,13 @@ module LittleBigAdmin
     helper "little_big_admin/application"
     include Rails.application.routes.url_helpers
 
-    before_filter :_reload_objects
-    before_filter :little_big_admin_user_authorize
-    before_filter :little_big_admin_authorize
+    before_action { params.permit! }
+    
+    before_action :_reload_objects
+    before_action :little_big_admin_user_authorize
+    before_action :little_big_admin_authorize
 
-    before_filter :little_big_admin_menu
+    before_action :little_big_admin_menu
 
     def _reload_objects
       LittleBigAdmin.load_all_objects unless Rails.application.config.cache_classes

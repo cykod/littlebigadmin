@@ -1,9 +1,10 @@
 class LittleBigAdmin::ItemsController < LittleBigAdmin::ApplicationController
 
-  before_filter :get_model
-  before_filter :check_edit, except: [ :index, :show ]
-
   self.type_name = :model
+
+  before_action :get_model
+  before_action :check_edit, except: [ :index, :show ]
+
 
   def index
     set_title(@model.title)
